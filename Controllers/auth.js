@@ -53,3 +53,57 @@ export const register = (req,res) =>{
 
 
 }
+
+//for login
+export const login = (req,res) =>{
+    try{  
+        const {email,password} = req.body;
+
+        //check the full details
+        if(!email || !password){
+            return res.status(402).json({
+            status : false,
+            message : "Fill all the details",
+            })
+        }
+
+        //check for the existing user
+        const q = "SELECT * from users WHERE email = (?)";
+        db.query(q,[email],async (err,data) =>{
+            if(err){
+                return res.status(502).json({
+                    status : false,
+                    message : "server error during DB query",
+                })
+            }
+            if(!data.length){
+                return res.status(404).json({
+                    status : false,
+                    message : "No account with this email",
+                    data : data,
+                })
+            }
+            else{
+                if( bcrypt.compare(data[0].password,password)){
+                    console.log("Logged in ");
+                    return res.status(200).json({
+                        status : true,
+                        message : "logged in",
+                    })
+                }else{
+                    console.log("password not matched");
+                    return res.status(401).json({
+                        status : false,
+                        message : "password not matched",
+                    })
+                }
+            }
+        })
+    }catch(err){
+        console.log("Error during login : " ,err.message);
+        return res.status(500).json({
+            status : false,
+            message : "server error during login",
+        })
+    }
+}
