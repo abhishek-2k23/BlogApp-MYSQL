@@ -84,7 +84,7 @@ export const login = (req,res) =>{
                 })
             }
             else{
-                if( bcrypt.compare(data[0].password,password)){
+                if(await bcrypt.compare(password,data[0].password)){
                     console.log("Logged in ");
                     return res.status(200).json({
                         status : true,
