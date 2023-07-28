@@ -1,5 +1,6 @@
 import bcrypt from "bcrypt";
 import { db } from "../Configuration/db.js"
+import jwt from "jsonwebtoken";
 
 //for register
 export const register = (req,res) =>{
@@ -85,10 +86,11 @@ export const login = (req,res) =>{
             }
             else{
                 if(await bcrypt.compare(password,data[0].password)){
+                    let token = jwt.sign({id:data[0].id},"secretKey");
                     console.log("Logged in ");
-                    return res.status(200).json({
-                        status : true,
-                        message : "logged in",
+                    const {password,...other} = data[0];
+                    return res.cookie("userToken",token,{httpOnly:true}).status(200).json({
+                         other
                     })
                 }else{
                     console.log("password not matched");
@@ -107,3 +109,11 @@ export const login = (req,res) =>{
         })
     }
 }
+
+//for logout
+export const logout = (req,res) =>{
+    res.clearCookie("userToken",{
+        sameSite : true,
+        secure : true,
+    }).status(200).json("User has been logged out.");
+}   
