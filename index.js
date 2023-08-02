@@ -1,6 +1,7 @@
 // const express = require("express");
 import express from "express";
 import cors from "cors";
+import dotenv from "dotenv";
 import { db } from "./Configuration/db.js";
 import postRoutes from "./Routes/posts.js";
 import authRoutes from "./Routes/auth.js";
@@ -9,7 +10,7 @@ import cookieParser from "cookie-parser";
 import multer from "multer"; //To import the file on the server
 
 // const db = require("./Configuration/db");
-
+dotenv.config();
 const app = express();
 
 // parser
@@ -27,8 +28,8 @@ db.connect((err) => {
 });
 
 //server up
-app.listen(8800, () => {
-  console.log("server started.");
+app.listen(process.env.PORT, () => {
+  console.log("server started at : ",process.env.PORT);
 });
 
 //homepage test
