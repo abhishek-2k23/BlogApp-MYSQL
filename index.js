@@ -21,7 +21,7 @@ app.use(cookieParser());
 //db connection
 db.connect((err) => {
   if (err) {
-    console.log("Error in connecting the db.");
+    console.log("Error in connecting the db.",err.message);
   } else {
     console.log("DB connnected.");
   }
@@ -37,7 +37,7 @@ app.get("/", (req, res) => {
   res.send("server is running smoothly.");
 });
 
-//post test
+//Routes
 app.use("/api/post", postRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/users", usersRoutes);
