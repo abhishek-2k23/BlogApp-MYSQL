@@ -8,6 +8,8 @@ import authRoutes from "./Routes/auth.js";
 import usersRoutes from "./Routes/auth.js";
 import cookieParser from "cookie-parser";
 import multer from "multer"; //To import the file on the server
+// import fileUpload from "express-fileupload";
+// import cloudinary from './Configuration/cloudinary.js';
 
 // const db = require("./Configuration/db");
 dotenv.config();
@@ -17,6 +19,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 app.use(cookieParser());
+app.use(fileUpload());
 
 //db connection
 db.connect((err) => {
@@ -26,6 +29,9 @@ db.connect((err) => {
     console.log("DB connnected.");
   }
 });
+
+// cloudinary connection 
+// cloudinary.cloudinaryConnect();
 
 //server up
 app.listen(process.env.PORT, () => {
