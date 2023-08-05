@@ -8,7 +8,7 @@ import authRoutes from "./Routes/auth.js";
 import usersRoutes from "./Routes/auth.js";
 import cookieParser from "cookie-parser";
 import multer from "multer"; //To import the file on the server
-// import fileUpload from "express-fileupload";
+import fileUpload from "express-fileupload";
 // import cloudinary from './Configuration/cloudinary.js';
 
 // const db = require("./Configuration/db");
