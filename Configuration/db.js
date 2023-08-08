@@ -2,13 +2,8 @@
 import mysql from "mysql";
 import dotenv from "dotenv";
 dotenv.config();
-// const connectionURL = `mysql://root:xnOf3hn3xHhzPMqEx40o@containers-us-west-49.railway.app:5790/railway`;
-export const db = mysql.createConnection({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME,
-    port: process.env.DB_PORT
-  });
+const connectionURL = `mysql://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`;
+
+export const db = mysql.createConnection(connectionURL);
 
 // module.exports = db; 
