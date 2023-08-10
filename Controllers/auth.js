@@ -1,6 +1,9 @@
 import bcrypt from "bcrypt";
 import { db } from "../Configuration/db.js"
 import jwt from "jsonwebtoken";
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 //for register
 export const register = (req,res) =>{
@@ -86,7 +89,7 @@ export const login = (req,res) =>{
             }
             else{
                 if(await bcrypt.compare(password,data[0].password)){
-                    let token = jwt.sign({id:data[0].id},"secretKey");
+                    let token = jwt.sign({id:data[0].id},process.env.JWT_SECRETKEY);
                     console.log("Logged in ");
                     const {password,...other} = data[0];
                     return res.cookie("userToken",token,{httpOnly:true}).status(200).json({
